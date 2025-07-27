@@ -116,7 +116,7 @@ void logic(){
             headY--;
             break;
         case DOWN:
-            headX++;
+            headY++;
             break;
         
         
@@ -160,7 +160,7 @@ int main(){
     cout<<"\t\tSnake game\n";
     cout<<"*********************************************\n";
     char start;
-    cout<<"\nPress 's' to start game";
+    cout<<"\nPress 's' to start game =";
     cin>>start;
     if(start=='s'){
           setup();
@@ -172,5 +172,6 @@ int main(){
           system("cls");
           }
     }
+    cout<<"Game Over! Your score is: "<<score<<endl;
     return 0;
 }

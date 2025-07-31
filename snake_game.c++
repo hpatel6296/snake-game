@@ -18,6 +18,30 @@ void setup(){
     fruitX = rand()%width;
     fruitY = rand()%height;
 }
+void showSplashScreen() {
+    system("cls");
+    cout << R"(
+   _________              __         
+  /   _____/ ____   _____/  |_  ____ 
+  \_____  \ /  _ \ /    \   __\/ __ \
+  /        (  <_> )   |  \  | \  ___/
+ /_______  /\____/|___|  /__|  \___  >
+         \/            \/          \/
+)" << endl;
+    cout << "\nPress any key to continue...";
+    getch();
+}
+
+void showMenu() {
+    system("cls");
+    cout << "====================================\n";
+    cout << "\t  SNAKE GAME - C++ \n";
+    cout << "====================================\n";
+    cout << "1. Start Game\n";
+    cout << "2. Instructions\n";
+    cout << "3. Exit\n";
+    cout << "Enter choice: ";
+}
 void draw(){
     system("cls");
     //uper border
@@ -70,26 +94,24 @@ void draw(){
      cout<<"\t\t Score:"<<score;
 }
 void input(){
-           switch (getch())
-           {
+    if (_kbhit()) {
+        switch (getch()) {
             case 'a':
-                dir =  LEFT;
+                if (dir != RIGHT) dir = LEFT;
                 break;
             case 'd':
-                dir =  RIGHT;
+                if (dir != LEFT) dir = RIGHT;
                 break;
             case 'w':
-                dir =  UP;
+                if (dir != DOWN) dir = UP;
                 break;
             case 's':
-                dir =  DOWN;
+                if (dir != UP) dir = DOWN;
                 break;
-                            
-           
-           default:
-            break;
-           }
+        }
+    }
 }
+
 void logic(){
         int prevx = tailx[0];
         int prevy = taily[0];
@@ -112,15 +134,17 @@ void logic(){
         case RIGHT:
             headX++;
             break;
+           
         case UP:
             headY--;
             break;
+            
         case DOWN:
             headY++;
             break;
         
-        
         default:
+            
             break;
         }
         // touch wall
@@ -156,22 +180,39 @@ void logic(){
 }
 
 int main(){
-    cout<<"*********************************************\n";
-    cout<<"\t\tSnake game\n";
-    cout<<"*********************************************\n";
-    char start;
-    cout<<"\nPress 's' to start game =";
+
+    int start;
+    showSplashScreen();
+    again:
+    showMenu();
     cin>>start;
-    if(start=='s'){
+    if(start==1){
           setup();
           while(!gameOver){
           draw();
           input();
           logic();
-          Sleep(30);
-          system("cls");
-          }
+          Sleep(100);
+          cout<<"Score ="<<score<<endl;
+          return 0;
+          } 
     }
-    cout<<"Game Over! Your score is: "<<score<<endl;
+    if (start == 2){
+        system("cls");
+        cout << "INSTRUCTIONS:\n";
+        cout << "- Use W A S D to move the snake\n";
+        cout << "- Eat * to grow and gain score\n";
+        cout << "- Don't hit your own tail\n";
+        cout << "\nPress any key to go back...";
+        getch();
+        showMenu();
+
+        cin>>start;
+        goto again;
+    }
+    
+    if(start == 3){
+        cout<<"Good bye";
+    }
     return 0;
-}
+} 

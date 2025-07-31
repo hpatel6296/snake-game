@@ -193,8 +193,7 @@ int main(){
           input();
           logic();
           Sleep(100);
-          cout<<"Score ="<<score<<endl;
-          return 0;
+          
           } 
     }
     if (start == 2){
